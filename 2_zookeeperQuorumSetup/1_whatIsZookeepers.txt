@@ -1,0 +1,211 @@
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////what is zookeeper
+
+///////////what is zookeeper-1
+zookeeper provides multiple features for distributed applications:
+1 distributed configuration management
+2 self election/consensus building
+3 coordination and locks
+4 key value store
+
+zookeeper is used in many projects, kafka ....`````````
+
+3.4.x is the stable channel
+
+///////////what is zookeeper-2
+Zookeeper internal data structure is like a tree
+1 each node is called a zNode
+2 each zNode has a path
+3 zNode can be persistent or ephemeral
+4 each zNode can store data
+5 no renaming of zNode
+6 each zNode can be WATCHed for changes
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////zookeeper role in a Kafka cluster
+
+
+
+///////////role of zookeeper in Kafka-1
+1 brokers registration, with heartbeats mechanism to keep the list current
+2 maintaining a list of topics alongside
+1) their configuration(partitions, replication factor, additional configurations...)
+2) the list of IRS(in sync replicas) for partitions
+3 performing leader elections in case some brokers go down
+
+
+///////////role of zookeeper in Kafka-2
+1 storing the Kafka cluster id(randomly generated at 1st startup of cluster)
+
+2 storing ACLs(Access Control Lists) if security is enabled
+1) topics 
+2) consumer groups
+3) users
+
+3 quotas configuration if enabled
+
+4 (deprecated)used by old consumer API to store consumer offsets(we should use the new consumer API)    
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////Zookeeper Architecture Quorum sizing   
+
+
+///////////Zookeeper Architecture Quorum sizing-1
+1 zookeeper needs to have a strict majority of servers up to form a strict majority when votes happen
+2 therefore zookeeper quorums have 1,3,5,7,(2N + 1)servers
+3  allows for 0, 1,2,3,4,N servers to go down
+  
+
+
+///////////Zookeeper Architecture Quorum sizing-2
+
+only one zookeeper
+pros: 
+1 fast to put in place
+2 fast to make decision
+
+cons:
+1 not resilient
+2 not distributed
+
+
+
+///////////
+
+three zookeeper(suitable for many scenarios)
+pros: 
+1 distributed
+2 perferred for Kakfa deployments
+
+cons:
+1 only one server can go down
+
+///////////
+five zookeeper(suitble for 100 brokers in kafka)
+pros: 
+1 used for big Kafka deployments
+2 two servers can go down
+
+cons:
+1 need performant machines(!!!a lot network overhead)  
+
+
+///////////
+seven zookeeper(rarely used and needed setup. needs expert tuning)
+pros: 
+1 not much more than 5 servers setup except 3 servers can go down
+2 two servers can go down
+
+cons:
+1 network overhead and lag may affect zookeeper performance    
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////Zookeeper configuration  
+
+Zookeeper configuratin can be very tricky to optimize and really depends on how your Kafka cluster is formed, as well as your network environment
+
+
+///////////zookeeper.properties
+
+# the location to store the in-memory database snapshots and, unless specified otherwise, the transaction log of updates to the database.
+dataDir=/data/zookeeper
+
+# the port at which the clients will connect
+clientPort=2181
+
+# disable the per-ip limit on the number of connections since this is a non-production config
+maxClientCnxns=0
+
+# the basic time unit in milliseconds used by ZooKeeper. It is used to do heartbeats and the minimum session timeout will be twice the tickTime.
+tickTime=2000
+
+# The number of ticks that the initial synchronization phase can take(in this example, initLimit * tickTime = 20 seconds is the longest time that can be used for initial synchronization)
+initLimit=10
+
+# The number of ticks that can pass between
+# sending a request and getting an acknowledgement
+# in this example, if after initLimit * tickTime = 10 seconds and still without ack, the zookeeper will fail
+syncLimit=5
+
+
+# zoo servers
+# these hostnames such as `zookeeper-1` come from the /etc/hosts file
+# in the example, the following three zookeepers form a zookeeper cluster. port 2888 and port 3888 are used for zookeeper internal communication  
+server.1=zookeeper1:2888:3888
+server.2=zookeeper2:2888:3888
+server.3=zookeeper3:2888:3888
+
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
