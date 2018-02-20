@@ -1,0 +1,31 @@
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////High level information about Zookeeper
+1 distributed key value store
+2 has voting mechanisms
+3 used by many big data tools
+
+///////////absolutely necessary to have functional and up Zookeeper Quorum to run Apache Kafka
+
+
+
+///////////Zookeeper Quorum 
+1 three zookeepers are located in three virtual machines(these virtual machines possibly are located in different network zones so that it is hardly possibly that they fall at the same time). 
+2 three zookeepers can talk to each other.
+
+
+/////////// 
+
+
+
+
+quorum
+noun [ S ] UK ​  /ˈkwɔː.rəm/ US ​  /ˈkwɔːr.əm/ formal
+​
+the smallest number of people needed to be present at a meeting before it can officially begin and before official decisions can be taken
