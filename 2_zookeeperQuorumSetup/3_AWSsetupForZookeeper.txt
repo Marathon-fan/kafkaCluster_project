@@ -1,0 +1,191 @@
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+1 setup network security to allow Zookeeper ports(2181, 2888, 3888)  
+2 setup network security to allow my IP only   
+3 create one EC2 machines Ubuntu image t2.medium(4 GB RAM)  
+4 reserve 3 private IPs for our machines  
+
+///////////on aws, go to vpc
+a subnet is basically a availablity zone.
+typically, a region has three(2-5) subnets(availablity zone)  
+
+we see their IPv4 CIDR
+like in Sydney, we have: 
+172.31.16.0/20    ap-southeast-2c
+172.31.32.0/20    ap-southeast-2a
+172.31.0.0/20     ap-southeast-2b
+
+visit https://www.ipaddressguide.com/cidr to get exact ip range
+
+///////////go to EC2 console
+choose Ubuntu Server 16.04 LTS(HVM), SSD Volume Type
+
+use t2.medium   2vCPUs,   4G Ram
+
+then configure instance details,
+
+use a subnet
+
+assign a primary IP: 172.31.9.1
+
+then add storage:
+8GB or 15GB or 25 GB or larger
+use General Purpose SSD(GP2)
+
+disable "delete on Termination"(we will not l)
+
+then add tags:
+like zookeeper1
+
+then configure security group:
+name it : kafka-zookeeper
+
+SSH   		TCP   port Range:22   source(my IP): 122.149.196.85/32
+cusomTCP        tcp	         2181                172.31.0.0/16(be enough for all our instances with 3 availability zones)
+cusomTCP        tcp	         2888                172.31.0.0/16(be enough for all our instances with 3 availability zones)
+cusomTCP        tcp	         3888                172.31.0.0/16(be enough for all our instances with 3 availability zones)
+cusomTCP        tcp	         2181                myIP  122.149.196.85/32(so that I can get access to zookeeper from my pc)
+
+then review and launch
+
+create a new key pair
+
+then we use the key pair to login to the EC instance
+   
+then launch the EC2 instance
+
+then click network interfaces eth0, then click interface ID 
+
+then right click on the ec2 instance, choose "change termination behavior", untick "delete on termination", so that we never loose the private ip here even if we turn of the EC2 instance 
+
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
+
+
+///////////
+
+
+///////////
+
